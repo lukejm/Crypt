@@ -1,6 +1,6 @@
 package Crypt.crypt;
 
-public class ShiftCrypt {
+public class ShiftCrypt extends Crypt {
 
     private final char[] input;
     private String output = "";
@@ -12,6 +12,7 @@ public class ShiftCrypt {
         this.shift = shift;
     }
 
+    @Override
     public String getOutput(CryptType cryptType) {
         if (output.equals("")) {
             process(cryptType);
