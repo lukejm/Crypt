@@ -1,6 +1,6 @@
 package Crypt;
 
-public enum CryptType {
+public enum TypeCrypt {
     ENCRYPT,
     DECRYPT
 }

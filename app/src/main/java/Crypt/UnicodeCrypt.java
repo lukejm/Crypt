@@ -13,20 +13,20 @@ public class UnicodeCrypt extends Crypt {
     }
 
     @Override
-    public String getOutput(CryptType cryptType) {
+    public String getOutput(TypeCrypt typeCrypt) {
         if (output.equals("")) {
-            process(cryptType);
+            process(typeCrypt);
         }
         return output;
     }
 
-    private void process(CryptType cryptType) {
+    private void process(TypeCrypt typeCrypt) {
         StringBuilder sb = new StringBuilder();
 
         for (char el : input) {
-            if (cryptType.equals(CryptType.ENCRYPT)) {
+            if (typeCrypt.equals(TypeCrypt.ENCRYPT)) {
                 sb.append(shiftUp(el));
-            } else if (cryptType.equals(CryptType.DECRYPT)) {
+            } else if (typeCrypt.equals(TypeCrypt.DECRYPT)) {
                 sb.append(shiftDown(el));
             }
         }

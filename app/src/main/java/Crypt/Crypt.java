@@ -3,5 +3,5 @@ package Crypt;
 public abstract class Crypt {
 
 
-    public abstract String getOutput(CryptType cryptType);
+    public abstract String getOutput(TypeCrypt typeCrypt);
 }

@@ -13,23 +13,23 @@ public class ShiftCrypt extends Crypt {
     }
 
     @Override
-    public String getOutput(CryptType cryptType) {
+    public String getOutput(TypeCrypt typeCrypt) {
         if (output.equals("")) {
-            process(cryptType);
+            process(typeCrypt);
         }
         return output;
     }
 
-    private void process(CryptType cryptType) {
+    private void process(TypeCrypt typeCrypt) {
 
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < input.length; i++) {
             if (Character.isAlphabetic(input[i])) {
                 if (Character.isLowerCase(input[i])) {
-                    sb.append(shiftDirection(cryptType, input[i], 'a', 'z'));
+                    sb.append(shiftDirection(typeCrypt, input[i], 'a', 'z'));
                 } else {
-                    sb.append(shiftDirection(cryptType, input[i], 'A', 'Z'));
+                    sb.append(shiftDirection(typeCrypt, input[i], 'A', 'Z'));
                 }
             } else {
                 sb.append(input[i]);
@@ -38,11 +38,11 @@ public class ShiftCrypt extends Crypt {
         output = sb.toString();
     }
 
-    private char shiftDirection(CryptType cryptType, char el, char low, char high) {
+    private char shiftDirection(TypeCrypt typeCrypt, char el, char low, char high) {
         char curr = ' ';
-        if (cryptType.equals(CryptType.ENCRYPT)) {
+        if (typeCrypt.equals(TypeCrypt.ENCRYPT)) {
             curr = shiftRight(el, low, high);
-        } else if (cryptType.equals(CryptType.DECRYPT)) {
+        } else if (typeCrypt.equals(TypeCrypt.DECRYPT)) {
             curr = shiftLeft(el, low, high);
         }
         return curr;

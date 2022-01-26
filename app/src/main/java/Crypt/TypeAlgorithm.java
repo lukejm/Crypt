@@ -1,6 +1,6 @@
 package Crypt;
 
-public enum AlgorithmType {
+public enum TypeAlgorithm {
     SHIFT,
     UNICODE
 }
