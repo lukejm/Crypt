@@ -1,4 +1,4 @@
-package Crypt.crypt;
+package Crypt;
 
 public abstract class Crypt {
 

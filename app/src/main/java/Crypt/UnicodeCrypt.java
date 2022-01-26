@@ -1,4 +1,4 @@
-package Crypt.crypt;
+package Crypt;
 
 public class UnicodeCrypt extends Crypt {
 

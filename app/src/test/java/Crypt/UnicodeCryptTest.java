@@ -1,8 +1,5 @@
 package Crypt;
 
-import Crypt.crypt.Crypt;
-import Crypt.crypt.CryptType;
-import Crypt.crypt.UnicodeCrypt;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
