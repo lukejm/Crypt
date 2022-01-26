@@ -2,12 +2,12 @@ package Crypt.crypt;
 
 public class ShiftCrypt extends Crypt {
 
-    private final char[] input;
+    private char[] input;
     private String output = "";
 
-    private final int shift;
+    private int shift;
 
-    public ShiftCrypt(String input, int shift) {
+    private ShiftCrypt(String input, int shift) {
         this.input = input.toCharArray();
         this.shift = shift;
     }
@@ -61,6 +61,25 @@ public class ShiftCrypt extends Crypt {
             return (char) (high - low + el - shift + 1);
         } else {
             return (char) (el - shift);
+        }
+    }
+
+    public static class Builder {
+        private String input = "";
+        private int shift = 0;
+
+        public Builder input(String input) {
+            this.input = input;
+            return this;
+        }
+
+        public Builder shift(int shift) {
+            this.shift = shift;
+            return this;
+        }
+
+        public Crypt build() {
+            return new ShiftCrypt(input, shift);
         }
     }
 }

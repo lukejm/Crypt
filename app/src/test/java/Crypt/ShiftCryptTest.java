@@ -1,5 +1,6 @@
 package Crypt;
 
+import Crypt.crypt.Crypt;
 import Crypt.crypt.CryptType;
 import Crypt.crypt.ShiftCrypt;
 import org.junit.jupiter.api.Test;
@@ -9,83 +10,119 @@ public class ShiftCryptTest {
 
     @Test
     void outputTextCorrectDecrypt() {
-        assertEquals("Frank", new ShiftCrypt("Frank", 0).getOutput(CryptType.DECRYPT));
+        Crypt c = new ShiftCrypt.Builder().input("Frank").shift(0).build();
+        assertEquals("Frank", c.getOutput(CryptType.DECRYPT));
     }
 
     @Test
     void outputTextShiftCorrectAroundAtoZShiftOneLowerCaseDecrypt() {
-        assertEquals("yzabcd", new ShiftCrypt("zabcde", 1).getOutput(CryptType.DECRYPT));
+        Crypt c = new ShiftCrypt.Builder().input("zabcde").shift(1).build();
+        assertEquals("yzabcd", c.getOutput(CryptType.DECRYPT));
     }
 
     @Test
     void outputTextShiftCorrectAroundAtoZShiftOneUpperCaseDecrypt() {
-        assertEquals("ZABCDE", new ShiftCrypt("ABCDEF", 1).getOutput(CryptType.DECRYPT));
+        Crypt c = new ShiftCrypt.Builder().input("ABCDEF").shift(1).build();
+        assertEquals("ZABCDE", c.getOutput(CryptType.DECRYPT));
 
     }
 
     @Test
     void outputTextShiftCorrectShiftOneLowerCaseDecrypt() {
-        assertEquals("bcdefg", new ShiftCrypt("cdefgh",  1).getOutput(CryptType.DECRYPT));
+        Crypt c = new ShiftCrypt.Builder().input("cdefgh").shift(1).build();
+        assertEquals("bcdefg", c.getOutput(CryptType.DECRYPT));
     }
 
     @Test
     void outputTextShiftCorrectShiftOneUpperCaseDecrypt() {
-        assertEquals("BCDEFG", new ShiftCrypt("CDEFGH",  1).getOutput(CryptType.DECRYPT));
+        Crypt c = new ShiftCrypt.Builder().input("CDEFGH").shift(1).build();
+        assertEquals("BCDEFG", c.getOutput(CryptType.DECRYPT));
     }
 
     @Test
     void shiftByWholeAlphabetLowerCaseDecrypt() {
-        assertEquals("abcdef", new ShiftCrypt("abcdef", 26).getOutput(CryptType.DECRYPT));
+        Crypt c = new ShiftCrypt.Builder().input("abcdef").shift(26).build();
+        assertEquals("abcdef", c.getOutput(CryptType.DECRYPT));
     }
 
     @Test
     void shiftByWholeAlphabetUpperCaseDecrypt() {
-        assertEquals("ABCDEF", new ShiftCrypt("ABCDEF", 26).getOutput(CryptType.DECRYPT));
+        Crypt c = new ShiftCrypt.Builder().input("ABCDEF").shift(26).build();
+        assertEquals("ABCDEF", c.getOutput(CryptType.DECRYPT));
     }
 
     @Test
     void shiftSpecialCharactersDecrypt() {
-        assertEquals("b!?@#$ ", new ShiftCrypt("c!?@#$ ", 1).getOutput(CryptType.DECRYPT));
+        Crypt c = new ShiftCrypt.Builder().input("c!?@#$ ").shift(1).build();
+        assertEquals("b!?@#$ ", c.getOutput(CryptType.DECRYPT));
     }
 
     @Test
     void outputTextCorrectEncrypt() {
-        assertEquals("Frank", new ShiftCrypt("Frank", 0).getOutput(CryptType.ENCRYPT));
+        Crypt c = new ShiftCrypt.Builder().input("Frank").shift(0).build();
+        assertEquals("Frank", c.getOutput(CryptType.ENCRYPT));
     }
 
     @Test
     void outputTextShiftCorrectAroundAtoZShiftOneLowerCaseEncrypt() {
-        assertEquals("zabcde", new ShiftCrypt("yzabcd", 1).getOutput(CryptType.ENCRYPT));
+        Crypt c = new ShiftCrypt.Builder().input("yzabcd").shift(1).build();
+        assertEquals("zabcde", c.getOutput(CryptType.ENCRYPT));
     }
 
     @Test
     void outputTextShiftCorrectAroundAtoZShiftOneUpperCaseEncrypt() {
-        assertEquals("ZABCDE", new ShiftCrypt("YZABCD", 1).getOutput(CryptType.ENCRYPT));
-
+        Crypt c = new ShiftCrypt.Builder().input("YZABCD").shift(1).build();
+        assertEquals("ZABCDE", c.getOutput(CryptType.ENCRYPT));
     }
 
     @Test
     void outputTextShiftCorrectShiftOneLowerCaseEncrypt() {
-        assertEquals("cdefgh", new ShiftCrypt("bcdefg",  1).getOutput(CryptType.ENCRYPT));
+        Crypt c = new ShiftCrypt.Builder().input("bcdefg").shift(1).build();
+        assertEquals("cdefgh", c.getOutput(CryptType.ENCRYPT));
     }
 
     @Test
     void outputTextShiftCorrectShiftOneUpperCaseEncrypt() {
-        assertEquals("CDEFGH", new ShiftCrypt("BCDEFG",  1).getOutput(CryptType.ENCRYPT));
+        Crypt c = new ShiftCrypt.Builder().input("BCDEFG").shift(1).build();
+        assertEquals("CDEFGH", c.getOutput(CryptType.ENCRYPT));
     }
 
     @Test
     void shiftByWholeAlphabetLowerCaseEncrypt() {
-        assertEquals("abcdef", new ShiftCrypt("abcdef", 26).getOutput(CryptType.ENCRYPT));
+        Crypt c = new ShiftCrypt.Builder().input("abcdef").shift(26).build();
+        assertEquals("abcdef", c.getOutput(CryptType.ENCRYPT));
     }
 
     @Test
     void shiftByWholeAlphabetUpperCaseEncrypt() {
-        assertEquals("ABCDEF", new ShiftCrypt("ABCDEF", 26).getOutput(CryptType.ENCRYPT));
+        Crypt c = new ShiftCrypt.Builder().input("ABCDEF").shift(26).build();
+        assertEquals("ABCDEF", c.getOutput(CryptType.ENCRYPT));
     }
 
     @Test
     void shiftSpecialCharactersEncrypt() {
-        assertEquals("d!?@#$ ", new ShiftCrypt("c!?@#$ ", 1).getOutput(CryptType.ENCRYPT));
+        Crypt c = new ShiftCrypt.Builder().input("c!?@#$ ").shift(1).build();
+        assertEquals("d!?@#$ ", c.getOutput(CryptType.ENCRYPT));
+    }
+
+    @Test
+    void encryptDecryptTest() {
+        String text = "frank grimes !!!!";
+        Crypt encC = new ShiftCrypt.Builder().input(text).shift(20).build();
+        String enc = encC.getOutput(CryptType.ENCRYPT);
+        Crypt decC = new ShiftCrypt.Builder().input(enc).shift(20).build();
+        assertEquals(text, decC.getOutput(CryptType.DECRYPT));
+    }
+
+    @Test
+    void noInputTestEncrypt() {
+        Crypt c = new ShiftCrypt.Builder().build();
+        assertEquals("", c.getOutput(CryptType.ENCRYPT));
+    }
+
+    @Test
+    void noInputTestDecryption() {
+        Crypt c = new ShiftCrypt.Builder().build();
+        assertEquals("", c.getOutput(CryptType.DECRYPT));
     }
 }

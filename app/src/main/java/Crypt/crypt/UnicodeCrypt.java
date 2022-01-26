@@ -7,13 +7,9 @@ public class UnicodeCrypt extends Crypt {
 
     private final int key;
 
-    public UnicodeCrypt(String input, int key) {
+    private UnicodeCrypt(String input, int key) {
         this.input = input.toCharArray();
         this.key = key;
-    }
-
-    public String getOutput() {
-        return "Frank";
     }
 
     @Override
@@ -43,5 +39,24 @@ public class UnicodeCrypt extends Crypt {
 
     private char shiftDown(char el) {
         return (char) (el - key);
+    }
+
+    public static class Builder {
+        private String input = "";
+        private int key = 0;
+
+        public Builder input(String input) {
+            this.input = input;
+            return this;
+        }
+
+        public Builder key(int key) {
+            this.key = key;
+            return this;
+        }
+
+        public Crypt build() {
+            return new UnicodeCrypt(input, key);
+        }
     }
 }
