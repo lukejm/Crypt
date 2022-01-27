@@ -6,49 +6,38 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class UnicodeCryptTest {
 
+    private final String fileOutput = "build/resources/test/fileOutTest.test.txt";
+
     @Test
     void encryptWithKeyEqualToOne() {
-        Crypt c = new UnicodeCrypt.Builder().input("abcdef").key(1).build();
-        assertEquals("bcdefg", c.getOutput(TypeCrypt.ENCRYPT));
+        new CryptBuilder.Builder().data("abcdef").key("1").outFile(fileOutput).typeCrypt(TypeCrypt.ENCRYPT).typeAlgorithm(TypeAlgorithm.UNICODE).build().run();
+        assertEquals("bcdefg", FileAccess.getInputFromFile(fileOutput));
     }
 
     @Test
     void decryptWithKeyEqualToOne() {
-        Crypt c = new UnicodeCrypt.Builder().input("bcdefg").key(1).build();
-        assertEquals("abcdef", c.getOutput(TypeCrypt.DECRYPT));
+        new CryptBuilder.Builder().data("bcdefg").key("1").outFile(fileOutput).typeCrypt(TypeCrypt.DECRYPT).typeAlgorithm(TypeAlgorithm.UNICODE).build().run();
+        assertEquals("abcdef", FileAccess.getInputFromFile(fileOutput));
     }
 
     @Test
     void decrypt() {
-        Crypt c = new UnicodeCrypt.Builder().input("\\jqhtrj%yt%m~ujwxpnqq&").key(5).build();
-        assertEquals("Welcome to hyperskill!", c.getOutput(TypeCrypt.DECRYPT));
+        new CryptBuilder.Builder().data("\\jqhtrj%yt%m~ujwxpnqq&").key("5").outFile(fileOutput).typeCrypt(TypeCrypt.DECRYPT).typeAlgorithm(TypeAlgorithm.UNICODE).build().run();
+        assertEquals("Welcome to hyperskill!", FileAccess.getInputFromFile(fileOutput));
     }
 
     @Test
     void encrypt() {
-        Crypt c = new UnicodeCrypt.Builder().input("Welcome to hyperskill!").key(5).build();
-        assertEquals("\\jqhtrj%yt%m~ujwxpnqq&", c.getOutput(TypeCrypt.ENCRYPT));
+        new CryptBuilder.Builder().data("Welcome to hyperskill!").key("5").outFile(fileOutput).typeCrypt(TypeCrypt.ENCRYPT).typeAlgorithm(TypeAlgorithm.UNICODE).build().run();
+        assertEquals("\\jqhtrj%yt%m~ujwxpnqq&", FileAccess.getInputFromFile(fileOutput));
     }
 
     @Test
     void encryptDecrypt() {
         String message = "Frank Grimes !!!";
-        int key = 10;
-        Crypt encC = new UnicodeCrypt.Builder().input(message).key(10).build();
-        String encText = encC.getOutput(TypeCrypt.ENCRYPT);
-        Crypt decD = new UnicodeCrypt.Builder().input(encText).key(10).build();
-        assertEquals(message, decD.getOutput(TypeCrypt.DECRYPT));
-    }
-
-    @Test
-    void noInputTestEncrypt() {
-        Crypt c = new UnicodeCrypt.Builder().build();
-        assertEquals("", c.getOutput(TypeCrypt.ENCRYPT));
-    }
-
-    @Test
-    void noInputTestDecryption() {
-        Crypt c = new UnicodeCrypt.Builder().build();
-        assertEquals("", c.getOutput(TypeCrypt.DECRYPT));
+        new CryptBuilder.Builder().data(message).typeCrypt(TypeCrypt.ENCRYPT).key("10").outFile(fileOutput).typeAlgorithm(TypeAlgorithm.UNICODE).build().run();
+        String encText = FileAccess.getInputFromFile(fileOutput);
+        new CryptBuilder.Builder().data(encText).key("10").outFile(fileOutput).typeAlgorithm(TypeAlgorithm.UNICODE).typeCrypt(TypeCrypt.DECRYPT).build().run();
+        assertEquals(message, FileAccess.getInputFromFile(fileOutput));
     }
 }

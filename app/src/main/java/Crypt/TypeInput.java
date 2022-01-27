@@ -2,5 +2,6 @@ package Crypt;
 
 public enum TypeInput {
     FILE,
-    ARG
+    ARG,
+    DEFAULT
 }

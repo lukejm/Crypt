@@ -1,26 +1,22 @@
 package Crypt;
 
-public class UnicodeCrypt extends Crypt {
+public class UnicodeCrypt {
 
-    private final char[] input;
-    private String output = "";
+    private TypeCrypt typeCrypt;
+    private char[] input;
+    private int key;
 
-    private final int key;
-
-    private UnicodeCrypt(String input, int key) {
+    protected UnicodeCrypt(String input, String key, TypeCrypt typeCrypt) {
         this.input = input.toCharArray();
-        this.key = key;
+        this.key = Integer.parseInt(key);
+        this.typeCrypt = typeCrypt;
     }
 
-    @Override
-    public String getOutput(TypeCrypt typeCrypt) {
-        if (output.equals("")) {
-            process(typeCrypt);
-        }
-        return output;
+    public String getOutput() {
+        return process();
     }
 
-    private void process(TypeCrypt typeCrypt) {
+    private String process() {
         StringBuilder sb = new StringBuilder();
 
         for (char el : input) {
@@ -30,7 +26,7 @@ public class UnicodeCrypt extends Crypt {
                 sb.append(shiftDown(el));
             }
         }
-        output = sb.toString();
+        return sb.toString();
     }
 
     private char shiftUp(char el) {
@@ -39,24 +35,5 @@ public class UnicodeCrypt extends Crypt {
 
     private char shiftDown(char el) {
         return (char) (el - key);
-    }
-
-    public static class Builder {
-        private String input = "";
-        private int key = 0;
-
-        public Builder input(String input) {
-            this.input = input;
-            return this;
-        }
-
-        public Builder key(int key) {
-            this.key = key;
-            return this;
-        }
-
-        public Crypt build() {
-            return new UnicodeCrypt(input, key);
-        }
     }
 }

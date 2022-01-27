@@ -1,26 +1,23 @@
 package Crypt;
 
-public class ShiftCrypt extends Crypt {
+public class ShiftCrypt {
 
-    private char[] input;
-    private String output = "";
+    private TypeCrypt typeCrypt = TypeCrypt.ENCRYPT;
+    char[] input;
+    private int key;
 
-    private int shift;
 
-    private ShiftCrypt(String input, int shift) {
+    protected ShiftCrypt(String input, String key, TypeCrypt typeCrypt) {
         this.input = input.toCharArray();
-        this.shift = shift;
+        this.key = Integer.parseInt(key);
+        this.typeCrypt = typeCrypt;
     }
 
-    @Override
-    public String getOutput(TypeCrypt typeCrypt) {
-        if (output.equals("")) {
-            process(typeCrypt);
-        }
-        return output;
+    public String getOutput() {
+        return process();
     }
 
-    private void process(TypeCrypt typeCrypt) {
+    private String process() {
 
         StringBuilder sb = new StringBuilder();
 
@@ -35,7 +32,7 @@ public class ShiftCrypt extends Crypt {
                 sb.append(input[i]);
             }
         }
-        output = sb.toString();
+        return sb.toString();
     }
 
     private char shiftDirection(TypeCrypt typeCrypt, char el, char low, char high) {
@@ -49,37 +46,18 @@ public class ShiftCrypt extends Crypt {
     }
 
     private char shiftRight(char el, char low, char high) {
-        if (el + shift > high) {
-            return (char) (low + el + shift - high - 1);
+        if (el + key > high) {
+            return (char) (low + el + key - high - 1);
         } else {
-            return (char) (el + shift);
+            return (char) (el + key);
         }
     }
 
     private char shiftLeft(char el, char low, char high) {
-        if (el - shift < low) {
-            return (char) (high - low + el - shift + 1);
+        if (el - key < low) {
+            return (char) (high - low + el - key + 1);
         } else {
-            return (char) (el - shift);
-        }
-    }
-
-    public static class Builder {
-        private String input = "";
-        private int shift = 0;
-
-        public Builder input(String input) {
-            this.input = input;
-            return this;
-        }
-
-        public Builder shift(int shift) {
-            this.shift = shift;
-            return this;
-        }
-
-        public Crypt build() {
-            return new ShiftCrypt(input, shift);
+            return (char) (el - key);
         }
     }
 }
