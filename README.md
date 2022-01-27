@@ -27,13 +27,13 @@ included).
 "-key" -> encryption / decryption key (defaults to empty key
 if not provided).
 
-"-out" -> output file name (default set at standard
+"-out" -> output file name (defaults to standard
 out if no file is included).
 
-"-mode" -> "enc" for encryption, "dec" for decryption.
+"-mode" -> "enc" for encryption, "dec" for decryption (defaults to "enc").
 
-"-alg" -> see bellow for algorithm options more to be added (default 
-is the shift algorithm)
+"-alg" -> see bellow for algorithm options more to be added (defaults 
+to shift algorithm)
 
 ***
 ***
